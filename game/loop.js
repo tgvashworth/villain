@@ -8,10 +8,12 @@
         l:76,m:77,n:78,o:79,p:80,q:81,r:82,s:83,t:84,u:85,v:86,
         w:87,x:88,y:89,z:90};
 
-  var ctx
+  var canvas, $canvas, ctx
     , t = 0
     , div = 10
     , speed = 50;
+
+  var score = 0;
 
   // Characters
   var villain;
@@ -28,6 +30,11 @@
     }
   });
 
+  ps.on('g:score', function () {
+    score += Math.floor(20 * Math.random());
+    ps.emit('g:update_score', score);
+  });
+
   // Update
   ps.on('g:tick:update', function (t) {
 
@@ -35,7 +42,9 @@
 
       if( !doc.dead && !doc.ghost && player.loc.to(doc.loc) < 20 ) {
         if( player.vel.y > 0 ) {
+          doc.loc.y = 500;
           doc.dead = true;
+          ps.emit('g:score');
         } else {
           player.dead = true;
         }
@@ -51,6 +60,11 @@
 
   // Draw
   ps.on('g:tick:draw', function (t) {
+
+    $canvas.css({
+      top: 40 * Math.sin(t / 19),
+      left: 100 * Math.sin(t / 23)
+    });
 
     ctx.fillStyle = "rgba(0,0,0,.3)";
     ctx.fillRect(0,0,canvas.width, canvas.height);
@@ -106,6 +120,7 @@
 
   ps.on('g:loop:init', function (elem, stage) {
     canvas = elem;
+    $canvas = $(elem);
     ctx = stage;
     villain = Object.create(player);
     var i = 5, d;

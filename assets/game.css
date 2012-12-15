@@ -3,16 +3,32 @@
 }
 
 body {
-  display: -webkit-flex;
-  display: flex;
+  position: relative;
   margin: 0;
   padding: 0;  
   background: black;
+  color: white;
 }
 
 #stage {
+  position: relative;
   display: block;
   width: 800px;
   height: 600px;
-  margin: auto;
+  margin: 3em auto;
+}
+
+#score {
+  font: 2.5em/1.5 monospace;
+  font-weight: bold;
+  position: absolute;
+  text-align: center;
+  top: 0;
+  left: 0;
+  right: 0;
+  padding: 1em;
+}
+
+.scored {
+  color: red;
 }

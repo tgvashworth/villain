@@ -9,6 +9,7 @@ $(function () {
   c.$container = $('body');
   c.$canvas = $('#stage');
   c.canvas = c.$canvas.get(0);
+  c.$score = $('#score');
 
   var stage = c.canvas.getContext('2d');
 
@@ -26,8 +27,13 @@ $(function () {
 
   // Event handlers
   c.$window.on('resize', ps.emit.bind(this, 'v:resize'));
-  
   c.$document.on('keydown', ps.emit.bind(this, 'u:keydown'));
+  ps.on('g:update_score', function (score) {
+    c.$score.text(score).addClass('scored');
+    setTimeout(function () {
+      c.$score.removeClass('scored');
+    }, 1000);
+  });
 
   // Kick this off!
   ps.emit('g:load');
