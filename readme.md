@@ -1,3 +1,3 @@
 # Villain
 
-A [game](//phuu.github.com/villain).
+A [game](http://phuu.github.com/villain).
